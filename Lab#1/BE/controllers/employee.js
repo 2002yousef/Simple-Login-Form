@@ -21,5 +21,14 @@ exports.deleteEmployee = async (req, res, next) => {
 // TODO
 exports.createEmployee = async (req, res, next) => {
   const newEmployee = {id: req.body.id, name: req.body.name};
+
+  // Check if the ID already exists
+  const existingEmployee = employee.find(employee => employee.id === newEmployee.id);
+  if (existingEmployee) {
+    return res.status(400).json({ error: 'Employee ID already exists' });
+  }
+
+  // If ID doesn't exist, add the new employee
   employee.push(newEmployee);
 };
+
